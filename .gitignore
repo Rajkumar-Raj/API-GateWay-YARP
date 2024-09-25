@@ -4,9 +4,9 @@
 
 /.vs
 /Gateway/.vs
-/Gateway/bin/Debug/net8.0
+/Gateway/bin
 /Gateway/obj
-/InventoryService/bin/Debug/net8.0
+/InventoryService/bin
 /InventoryService/obj
-/FinanceService/bin/Debug/net8.0
+/FinanceService/bin
 /FinanceService/obj
