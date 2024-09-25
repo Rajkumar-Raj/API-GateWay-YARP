@@ -148,6 +148,72 @@ YARP will forward these requests to the respective services based on the configu
 
 
 
+7. Optional: Add Authentication (OAuth 2.0 / JWT)
+To secure the API Gateway with authentication, you can integrate JWT Authentication. Here’s how:
+
+Install the necessary packages:
+
+
+````
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+````
+Update Program.cs to configure JWT authentication:
+
+```
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// JWT Authentication
+var key = Encoding.ASCII.GetBytes("your_secret_key_here");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+var app = builder.Build();
+
+app.UseRouting();
+
+// Apply authentication and authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapReverseProxy();
+});
+
+app.Run();
+```
+
+Now, the API Gateway will require a JWT token for accessing the backend services.
+
+Summary
+You’ve created an API Gateway using YARP in .NET 8.
+It routes requests to different microservices based on routes and clusters defined in appsettings.json.
+You can add JWT Authentication for securing the API Gateway.
+This architecture allows for easy expansion as new services can be added by configuring new routes and clusters in the configuration file.
+
+
 
 Reference: https://microsoft.github.io/reverse-proxy/articles/getting-started.html
 
