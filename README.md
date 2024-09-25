@@ -1,4 +1,4 @@
-Step-by-Step Code for YARP API Gateway Integration
+**Step-by-Step Code for YARP API Gateway Integration**
 
 1. Create a New .NET 8 API Project
 First, create a new ASP.NET Core Web API project that will act as the API Gateway.
@@ -69,10 +69,11 @@ Open the appsettings.json file and configure the routes and clusters for the ser
 ````
 
 
-Routes: Define the different paths the API Gateway will match. Here, we have two services: Finance and Inventory.
-Clusters: Define the services the API Gateway routes to. Each cluster has destinations that point to the actual backend services.
+**Routes**: Define the different paths the API Gateway will match. Here, we have two services: Finance and Inventory.
+**Clusters**: Define the services the API Gateway routes to. Each cluster has destinations that point to the actual backend services.
+
 4. Update Program.cs to Add YARP Middleware
-Open the Program.cs file to configure the API Gateway and register the YARP middleware. Here’s the code you need to add.
+Open the Program.cs file to configure the API Gateway and register the YARP middleware. Hereâ€™s the code you need to add.
 
 ````
 var builder = WebApplication.CreateBuilder(args);
